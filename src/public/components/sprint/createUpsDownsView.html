@@ -1,0 +1,89 @@
+
+<div class= "container">
+    <div class = "col-lg-8 block">
+        <h4> Add Ups and Downs here</h4><br>
+        <div class = "form-group row">
+            <label class = "col-lg-4" for = "team"> Team: </label>
+            <input ng-disabled = "true" class = "col-lg-4" type ="text" name = "team" id ="team" ng-model = "entry.team">
+        </div>
+        <div class = "form-group row">
+            <label class = "col-lg-4" for = "track"> Track: </label>
+            <input ng-disabled = "true"  class = "col-lg-4" type ="text" name = "track" id ="track" ng-model = "entry.track">
+        </div>
+        <div class = "form-group row">
+            <label class = "col-lg-4" for = "sprint"> Sprint Number: </label>
+            <input class = "col-lg-4" type ="number" placeholder="Sprint number" name = "sprint" id ="sprint" ng-model = "entry.sprintNumber">
+        </div>
+        <div class = "form-group row">
+            <label class = "col-lg-4" for = "startDate"> Start Date: </label>
+            <input class = "col-lg-4" type ="text" placeholder = "yyyy-mm-dd" name = "startDate" id ="startDate" ng-model = "entry.startDate" >
+        </div>
+        <div class = "form-group row">
+            <label class = "col-lg-4" for = "endDate"> End Date: </label>
+            <input class = "col-lg-4" type ="text" placeholder = "yyyy-mm-dd" name = "endDate" id ="endDate" ng-model = "entry.endDate">
+        </div>
+        <div class = "form-group row">
+            <label class = "col-lg-4" for = "ups"> Up: </label>
+            <textarea class = "col-lg-6" ng-model="newUp" maxlength="90" placeholder="Enter one up here"></textarea>
+            <button ng-if = "newUp!==''" class = "btn btn-link floatright" ng-click="addUd('up', newUp)">Add</button>
+        </div>
+        <div class = "form-group row">
+            <label class = "col-lg-4" for = "ups"> Down: </label>
+            <textarea class = "col-lg-6" ng-model="newDown" maxlength="90" placeholder="Enter one down here"></textarea>
+            <button ng-if = "newDown!==''" class = "btn btn-link floatright" ng-click="addUd('down', newDown)">Add</button>
+        </div>
+        <div  class= "form-group row">
+            <label class = "col-lg-3" for = "endDate"> Ups and Downs: </label>
+            <table class = "col-lg-9" ng-if= "entry.uds.length > 0" class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="ud in entry.uds">
+                        <td>{{ud.type}}</td>
+                        <td style="word-wrap: break-word;width:auto;max-width:160px;">{{ud.val}}</td>
+                        <td>
+                            <button style = "padding:0" class = "btn btn-link floatright" data-target="#myModal" data-toggle="modal" ng-click= "edit(ud)">Edit</button>
+                            <button style = "padding:0" class = "btn btn-link floatright" ng-click= "deleteUd(ud)">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <section>
+            <button class = "btn btn-primary floatright" ng-click="submit()">Submit </button>
+        </section>
+    </div>
+</div>
+
+
+<div id = "myModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Edit Ups and Downs</h4>
+        </div>
+        <div class="modal-body">
+            <div class = "form-group row">
+                <label class = "col-lg-3" for = "type">Type</label>
+                <select class = "col-lg-3" ng-model ="editUd.type" ng-options="type for type in types">{{type}}</select>
+                <span class ="error_message" ng-if="editUd.type=== ''"> Type can not be empty</span>
+            </div>
+            <div class = "form-group row">
+                <label class = "col-lg-3" for = "activity"> Description</label>
+                <textarea class = "col-lg-6" ng-model="editUd.val" maxlength="90" placeholder="Enter Up or Down here"></textarea>
+                <span class ="error_message" ng-if="editUd.val=== ''"> {{editUd.type}} can not be empty</span>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button ng-disabled = "editUd.type === '' || editUd.val===''" data-dismiss="modal" ng-click = "updateUd()" type="button" class="btn btn-primary">Update</button>
+        </div>
+        </div>
+    </div>
+</div>

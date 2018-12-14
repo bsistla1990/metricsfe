@@ -1,0 +1,112 @@
+
+<div class= "container">
+    <div class = "col-lg-4 block">
+        <h4> Add Sprint Report here</h4><br>
+        <div class = "form-group row">
+            <label class = "col-lg-4" for = "team"> Team: </label>
+            <input ng-disabled = "true" class = "col-lg-4" type ="text" name = "team" id ="team" ng-model = "entry.team">
+        </div>
+        <div class = "form-group row">
+            <label class = "col-lg-4" for = "track"> Track: </label>
+            <input ng-disabled = "true"  class = "col-lg-4" type ="text" name = "track" id ="track" ng-model = "entry.track">
+        </div>
+        <div class = "form-group row">
+            <label class = "col-lg-4" for = "sprint"> Sprint Number: </label>
+            <input class = "col-lg-4" type ="number" placeholder="Sprint number" name = "sprint" id ="sprint" ng-model = "entry.sprintNumber">
+        </div>
+        <div class = "form-group row">
+            <label class = "col-lg-4" for = "startDate"> Start Date: </label>
+            <input class = "col-lg-4" type ="text" placeholder = "yyyy-mm-dd" name = "startDate" id ="startDate" ng-model = "entry.startDate" >
+        </div>
+        <div class = "form-group row">
+            <label class = "col-lg-4" for = "endDate"> End Date: </label>
+            <input class = "col-lg-4" type ="text" placeholder = "yyyy-mm-dd" name = "endDate" id ="endDate" ng-model = "entry.endDate">
+        </div>
+        <div  class= "form-group row">
+            <label class = "col-lg-3" for = "endDate"> Stories: </label>
+            <table class = "col-lg-9" ng-if= "entry.stories.length > 0" class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Story</th>
+                    <th>Points</th>
+                    <th>Activity</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="story in entry.stories">
+                        <td>{{story.story}}</td>
+                        <td>{{story.points}}</td>
+                        <td>{{story.activity}}</td>
+                        <td>
+                            <button style = "padding:0" class = "btn btn-link floatright" ng-click= "deleteStory(story)">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <section>
+            <button class = "btn btn-primary floatright" data-target="#myModal" data-toggle="modal">Add Story</button>
+            <button class = "btn btn-link floatright" ng-click="reset()">Reset </button>
+            <button class = "btn btn-primary floatright" ng-click="submit()">Submit </button>
+        </section>
+    </div>
+
+    <div class = "col-lg-7 block">
+        <h4> Latest Entries made by user</h4><br>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Team</th>
+                <th>Track</th>
+                <th>Sprint</th>
+                <th>Story</th>
+                <th>Points</th>
+                <th>Activity</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="entry in searchResults">
+                    <td>{{entry.team.substring(-11)}}</td>
+                    <td>{{entry.track.substring(-11)}}</td>
+                    <td>{{entry.sprint}}</td>
+                    <td>{{entry.story}}</td>
+                    <td>{{entry.points}}</td>
+                    <td>{{entry.activity}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id = "myModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Add Story</h4>
+            </div>
+            <div class="modal-body">
+                <div class = "form-group row">
+                    <label class = "col-lg-3" for = "story"> Story: </label>
+                    <input class = "col-lg-3" type ="text" placeholder="Sprint number" name = "story" id ="story" ng-model = "newStory.story">
+                    <span class ="error_message" ng-if="newStory.story=== ''"> Story Number can not be empty</span>
+                </div>
+                <div class = "form-group row">
+                    <label class = "col-lg-3" for = "activity"> Activity</label>
+                    <select class = "col-lg-3" ng-model ="newStory.activity" ng-options="activity for activity in activities" >{{activity}}</select>
+                    <span class ="error_message" ng-if="newStory.activity=== ''"> Activity can not be empty</span>
+                </div>
+                <div class = "form-group row">
+                    <label class = "col-lg-3" for = "points"> Points: </label>
+                    <input class = "col-lg-3" type ="number" placeholder="Story Points" name = "points" id ="points" ng-model = "newStory.points">
+                    <span class ="error_message" ng-if="newStory.points=== ''"> Story Points can not be empty</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button ng-disabled = "checkStoryFormValidity()" data-dismiss="modal" ng-click = "addStory()" type="button" class="btn btn-primary">Add Story</button>
+            </div>
+            </div>
+        </div>
+    </div>

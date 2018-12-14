@@ -1,0 +1,53 @@
+<html ng-app ="metrics">
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="./css/elements.css">
+    </head>
+    <body ng-cloak>
+        <div class = "container">
+            <h2>Metrics App</h2>
+        </div>
+        <div class = "container" ng-controller = "topBarController">
+            <ul class="nav nav-tabs" ng-if="storage.user">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown">Productivity Metrics<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#!/prod/create">Create</a></li>
+                        <li><a href="#!/prod/search">Search</a></li> 
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown">Sprint Summary<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#!/sprint/create">Add Sprint Summary</a></li>
+                        <li><a href="#!/sprint/search">Search Sprint Summary</a></li> 
+                        <li><a href="#!/ud/create">Add Ups and Downs</a></li>
+                        <li><a href="#!/ud/search">Search Ups and Downs</a></li> 
+                    </ul>
+                </li>
+                <li ng-click = "logout()">
+                    <a ng-if="storage.user" class = "floatright" >Logout</a>
+                </li>
+            </ul>
+            
+        </div>
+        <div class = "container">
+            <ng-view></ng-view>
+        </div>
+    </body>
+    <!--Library for angularjs-->
+    <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular.min.js"></script>
+    <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5//angular-route.min.js"></script>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.11/ngStorage.min.js"></script>
+    <!--Library for bootstrap and jquery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!--Library for exporting date to excel-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/alasql/0.4.2/alasql.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.9.2/xlsx.core.min.js"></script>
+    <!--Library for Metrics app js-->
+    <script src = "./app.js"></script>
+    
+    
+</html>
+

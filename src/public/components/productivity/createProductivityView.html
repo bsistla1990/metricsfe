@@ -1,0 +1,83 @@
+
+<div class= "container">
+<div class = "col-lg-3 block">
+    <h4> Add Productivity Metrics here</h4><br>
+    <div class = "form-group row">
+        <label class = "col-lg-6" for = "team"> Team: </label>
+        <input ng-disabled = "true" class = "col-lg-6" type ="text" name = "team" id ="team" ng-model = "entry.team">
+    </div>
+    <div class = "form-group row">
+        <label class = "col-lg-6" for = "track"> Track: </label>
+        <input ng-disabled = "true"  class = "col-lg-6" type ="text" name = "track" id ="track" ng-model = "entry.track">
+    </div>
+    <div class = "form-group row">
+        <label class = "col-lg-6" for = "sprint"> Sprint Number: </label>
+        <input class = "col-lg-6" type ="number" placeholder="Sprint number" name = "sprint" id ="sprint" ng-model = "entry.sprintNumber">
+    </div>
+    <div class = "form-group row">
+        <label class = "col-lg-6" for = "startDate"> Start Date: </label>
+        <input class = "col-lg-6" type ="text" placeholder = "yyyy-mm-dd" name = "startDate" id ="startDate" ng-model = "entry.startDate" >
+    </div>
+    <div class = "form-group row">
+        <label class = "col-lg-6" for = "endDate"> End Date: </label>
+        <input class = "col-lg-6" type ="text" placeholder = "yyyy-mm-dd" name = "endDate" id ="endDate" ng-model = "entry.endDate">
+    </div>
+    <div class = "form-group row">
+        <label class = "col-lg-6" for = "devStories"> Dev Stories: </label>
+        <input class = "col-lg-6" type ="number" name = "devStories" id ="devStories" ng-model = "entry.devStories">
+    </div>
+    <div class = "form-group row">
+        <label class = "col-lg-6" for = "devPoints"> Dev Points: </label>
+        <input class = "col-lg-6" type ="number" name = "devPoints" id ="devPoints" ng-model = "entry.devPoints">
+    </div>
+    <div class = "form-group row">
+        <label class = "col-lg-6" for = "devCommits"> Dev Commits: </label>
+        <input class = "col-lg-6" type ="number" name = "devCommits" id ="devCommits" ng-model = "entry.devCommits">
+    </div>
+    <div class = "form-group row">
+        <label class = "col-lg-6" for = "qaStories"> QA Stories: </label>
+        <input class = "col-lg-6"type ="number" name = "qaStories" id ="qaStories" ng-model = "entry.qaStories">
+    </div>
+    <div class = "form-group row">
+        <label class = "col-lg-6" for = "qaPoints"> QA Points: </label>
+        <input class = "col-lg-6"type ="text" name = "qaPoints" id ="qaPoints" ng-model = "entry.qaPoints">
+    </div>
+    <div class = "form-group row">
+        <label class = "col-lg-6" for = "qaCommits"> QA Commits: </label>
+        <input class = "col-lg-6" type ="number" name = "qaCommits" id ="qaCommits" ng-model = "entry.qaCommits">
+    </div>
+    <section>
+        <button class = "btn btn-link floatright" ng-click="reset()">Reset </button>
+        <button class = "btn btn-primary floatright" ng-click="submit()">Submit </button>
+    </section>
+</div>
+
+<div class = "col-lg-8 block">
+    <h4> Latest Entries made by user</h4><br>
+    <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Track</th>
+        <th>Sprint</th>
+        <th>Dev Stories</th>
+        <th>Dev Points</th>
+        <th>Dev Commits</th>
+        <th>QA Stories</th>
+        <th>QA Points</th>
+        <th>QA Commits</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="entry in latest">
+            <td>{{entry.track.substring(-11)}}</td>
+            <td>{{entry.sprint}}</td>
+            <td>{{entry.devStories}}</td>
+            <td>{{entry.devPoints}}</td>
+            <td>{{entry.devCommits}}</td>
+            <td>{{entry.qaStories}}</td>
+            <td>{{entry.qaPoints}}</td>
+            <td>{{entry.qaCommits}}</td>
+        </tr>
+    </tbody>
+  </table>
+</div>

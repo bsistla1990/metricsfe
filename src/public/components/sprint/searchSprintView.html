@@ -1,0 +1,136 @@
+
+<div class= "container">
+
+    <div class = "col-lg-12 block">
+        <h4> Filters </h4><hr>
+        <div class = "form-row ">
+            <div class = "form-group col-md-4">
+                <label for = "team"> Team: </label>
+                <select style="float: right;width: 172px;" ng-disabled = "role==='user' || role === 'lead'" ng-model="searchForm.team" ng-options="team for team in teams" ng-change="loadTracks()"></select>
+            </div>
+            <div class = "form-group col-md-4">
+                <label for = "track"> Track: </label>
+                <select style="float: right;width: 172px;" ng-disabled = "role==='user'"ng-model="searchForm.track" ng-options="track for track in tracks" ng-change="loadUsers()"></select>
+            </div>
+            <div class = "form-group col-md-4">
+                <label for = "user"> User: </label>
+                <select style="float: right;width: 172px;" ng-disabled = "role === 'user'" ng-model="searchForm.user" ng-options="user for user in users"></select>
+            </div>
+        </div>
+        <div class= "form-row">
+            <div class = "form-group col-md-4">
+                <label for = "sprint"> Sprint Number: </label>
+                <input style="float:right"  ng-disabled = "searchForm.startDate!== '' || searchForm.endDate!== '' "type ="text" placeholder="Sprint number" name = "sprint" id ="sprint" ng-model = "searchForm.sprint">
+            </div>
+            <div class = "form-group col-md-4">
+                <label for = "startDate"> From Date: </label>
+                <input style="float:right"  ng-disabled = "searchForm.sprint!== ''" type ="text" placeholder = "yyyy-mm-dd" name = "startDate" id ="startDate" ng-model = "searchForm.startDate" >
+            </div>
+            <div class = "form-group col-md-4">
+                <label for = "endDate"> To Date: </label>
+                <input style="float:right"  ng-disabled = "searchForm.sprint!== ''" type ="text" placeholder = "yyyy-mm-dd" name = "endDate" id ="endDate" ng-model = "searchForm.endDate">
+            </div>
+        </div>
+        <section>
+        <button style= "float:right" class = "btn btn-primary floatright" ng-click="submit()">Search </button>
+    </section>
+    </div>
+
+    <div id = "myModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Edit Metrics</h4>
+            </div>
+            <div class="modal-body">
+                <div class = "form-group row">
+                    <label class = "col-lg-3" for = "sprint"> Sprint Number: </label>
+                    <input class = "col-lg-3" type ="text" placeholder="Sprint number" name = "sprint" id ="sprint" ng-model = "editingRow.sprint">
+                    <span class ="error_message" ng-if="editingRow.sprint=== ''"> Sprint Number can not be empty</span>
+                </div>
+                <div class = "form-group row">
+                    <label class = "col-lg-3" for = "startDate"> Start Date: </label>
+                    <input class = "col-lg-3" type ="text" placeholder = "yyyy-mm-dd" name = "startDate" id ="startDate" ng-model = "editingRow.startDate" >
+                    <span class ="error_message" ng-if="editingRow.startDate === '' || !validateDate(editingRow.startDate)"> Please enter date in yyyy-mm-dd format</span>
+                </div>
+                <div class = "form-group row">
+                    <label class = "col-lg-3" for = "endDate"> End Date: </label>
+                    <input class = "col-lg-3" type ="text" placeholder = "yyyy-mm-dd" name = "endDate" id ="endDate" ng-model = "editingRow.endDate">
+                    <span class ="error_message" ng-if="editingRow.endDate === '' || !validateDate(editingRow.endDate)"> Please enter date in yyyy-mm-dd format</span>
+                </div>
+                <div class = "form-group row">
+                    <label class = "col-lg-3" for = "devStories"> Dev Stories: </label>
+                    <input class = "col-lg-3" type ="number" name = "devStories" id ="devStories" ng-model = "editingRow.devStories">
+                    <span class ="error_message" ng-if="editingRow.devStories=== ''"> Dev Stories can not be empty</span>
+                </div>
+                <div class = "form-group row">
+                    <label class = "col-lg-3" for = "devPoints"> Dev Points: </label>
+                    <input class = "col-lg-3" type ="number" name = "devPoints" id ="devPoints" ng-model = "editingRow.devPoints">
+                    <span class ="error_message" ng-if="editingRow.devPoints=== ''"> Dev Points can not be empty</span>
+                </div>
+                <div class = "form-group row">
+                    <label class = "col-lg-3" for = "devCommits"> Dev Commits: </label>
+                    <input class = "col-lg-3" type ="number" name = "devCommits" id ="devCommits" ng-model = "editingRow.devCommits">
+                    <span class ="error_message" ng-if="editingRow.devCommits=== ''"> Dev Commits can not be empty</span>
+                </div>
+                <div class = "form-group row">
+                    <label class = "col-lg-3" for = "qaStories"> QA Stories: </label>
+                    <input class = "col-lg-3"type ="number" name = "qaStories" id ="qaStories" ng-model = "editingRow.qaStories">
+                    <span class ="error_message" ng-if="editingRow.qaStories=== ''"> QA Stories can not be empty</span>
+                </div>
+                <div class = "form-group row">
+                    <label class = "col-lg-3" for = "qaPoints"> QA Points: </label>
+                    <input class = "col-lg-3"type ="number" name = "qaPoints" id ="qaPoints" ng-model = "editingRow.qaPoints">
+                    <span class ="error_message" ng-if="editingRow.qaPoints === ''"> QA Points can not be empty</span>
+                </div>
+                <div class = "form-group row">
+                    <label class = "col-lg-3" for = "qaCommits"> QA Commits: </label>
+                    <input class = "col-lg-3" type ="number" name = "qaCommits" id ="qaCommits" ng-model = "editingRow.qaCommits">
+                    <span class ="error_message" ng-if="editingRow.qaCommits=== ''"> QA Commits can not be empty</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button ng-disabled = "checkEditFormValidity()" ng-click = "submitEditForm()" type="button" class="btn btn-primary">Save changes</button>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <div class = "col-lg-12 block">
+        <h4> Search Results <button ng-if="searchResults && searchResults.length>0" style = "float:right; font-weight:bold; font-size: 13px" ng-click = "exportToExcel()">Export to Excel</button></h4> <hr>
+        <table id= "pmetrics" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Team</th>
+                    <th>Track</th>
+                    <th>Sprint</th>
+                    <th>StartDate</th>
+                    <th>End Date</th>
+                    <th>Story</th>
+                    <th>Activity</th>
+                    <th>Points</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="entry in searchResults">
+                    <td>{{entry.user.substring(0,16)}}</td>
+                    <td>{{entry.team.substring(0,16)}}</td>
+                    <td>{{entry.track.substring(0,16)}}</td>
+                    <td>{{entry.sprint}}</td>
+                    <td>{{entry.startDate}}</td>
+                    <td>{{entry.endDate}}</td>
+                    <td>{{entry.story}}</td>
+                    <td>{{entry.activity}}</td>
+                    <td>{{entry.points}}</td>
+                    <td>
+                        <!--<button style = "padding:0" data-target="#myModal" data-toggle="modal" class = "btn btn-link floatright" ng-click="editRow(entry)">Edit</button>-->
+                        <button style = "padding:0" class = "btn btn-link floatright" ng-click= "deleteRow(entry.id)">Delete</button>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
